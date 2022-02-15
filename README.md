@@ -1,5 +1,7 @@
 # AssetRipper.VersionUtilities
 
+[![](https://img.shields.io/nuget/v/AssetRipper.VersionUtilities)](https://www.nuget.org/packages/AssetRipper.VersionUtilities)
+
 Managed library for handling Unity versions
 
 # Legal Disclaimers
