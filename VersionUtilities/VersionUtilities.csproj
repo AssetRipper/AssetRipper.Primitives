@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netframework3.5;netframework4.0;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+		<LangVersion>Latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<RootNamespace>AssetRipper.VersionUtilities</RootNamespace>
+		<Authors>ds5678</Authors>
+		<Company>AssetRipper</Company>
+		<Version>1.0.0.0</Version>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<PackageId>AssetRipper.VersionUtilities</PackageId>
+		<PackageTags>C# version unity unity3d</PackageTags>
+		<RepositoryUrl>https://github.com/AssetRipper/VersionUtilities</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/AssetRipper/VersionUtilities</PackageProjectUrl>
+		<Copyright>Copyright (c) 2022 ds5678</Copyright>
+		<Description>Managed library for handling Unity versions</Description>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<DocumentationFile>bin\VersionUtilities.xml</DocumentationFile>
+	</PropertyGroup>
+
+</Project>
