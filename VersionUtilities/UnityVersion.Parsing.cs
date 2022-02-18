@@ -47,6 +47,15 @@ namespace AssetRipper.VersionUtilities
 		}
 
 		/// <summary>
+		/// Serialize the version as a string
+		/// </summary>
+		/// <returns>A new string like 2019.4.3</returns>
+		public string ToStringWithoutType()
+		{
+			return $"{Major}.{Minor}.{Build}";
+		}
+
+		/// <summary>
 		/// Parse a dll name like _2019_4_3f1.dll
 		/// </summary>
 		/// <param name="dllName">The name of a dll file</param>
