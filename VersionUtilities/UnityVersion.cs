@@ -10,32 +10,35 @@
 		private const int buildOffset = 32;
 		private const int typeOffset = 24;
 		private const int typeNumberOffset = 16;
+		private const ulong byteMask = 0xFFUL;
+		private const ulong ushortMask = 0xFFFFUL;
+
 		private readonly ulong m_data;
 
 		/// <summary>
 		/// The first number in a Unity version string
 		/// </summary>
-		public int Major => unchecked((int)((m_data >> majorOffset) & 0xFFFFUL));
+		public int Major => unchecked((int)((m_data >> majorOffset) & ushortMask));
 
 		/// <summary>
 		/// The second number in a Unity version string
 		/// </summary>
-		public int Minor => unchecked((int)((m_data >> minorOffset) & 0xFFUL));
+		public int Minor => unchecked((int)((m_data >> minorOffset) & byteMask));
 
 		/// <summary>
 		/// The third number in a Unity version string
 		/// </summary>
-		public int Build => unchecked((int)((m_data >> buildOffset) & 0xFFUL));
+		public int Build => unchecked((int)((m_data >> buildOffset) & byteMask));
 
 		/// <summary>
 		/// The letter in a Unity version string
 		/// </summary>
-		public UnityVersionType Type => (UnityVersionType)unchecked((int)((m_data >> typeOffset) & 0xFFUL));
+		public UnityVersionType Type => (UnityVersionType)unchecked((int)((m_data >> typeOffset) & byteMask));
 
 		/// <summary>
 		/// The last number in a Unity version string
 		/// </summary>
-		public int TypeNumber => unchecked((int)((m_data >> typeNumberOffset) & 0xFFUL));
+		public int TypeNumber => unchecked((int)((m_data >> typeNumberOffset) & byteMask));
 
 		/// <summary>
 		/// The minimum value this type can have
