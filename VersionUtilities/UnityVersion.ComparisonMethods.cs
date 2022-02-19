@@ -40,30 +40,30 @@
 		
 		private UnityVersion From(int major)
 		{
-			ulong data = ((ulong)(major & 0xFFFF) << 48) | (0x0000FFFFFFFFFFFFUL & m_data);
+			ulong data = ((ulong)(major & 0xFFFF) << majorOffset) | (0x0000FFFFFFFFFFFFUL & m_data);
 			return new UnityVersion(data);
 		}
 		private UnityVersion From(int major, int minor)
 		{
-			ulong data = ((ulong)(major & 0xFFFF) << 48) | ((ulong)(minor & 0xFF) << 40) | (0x000000FFFFFFFFFFUL & m_data);
+			ulong data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | (0x000000FFFFFFFFFFUL & m_data);
 			return new UnityVersion(data);
 		}
 		private UnityVersion From(int major, int minor, int build)
 		{
-			ulong data = ((ulong)(major & 0xFFFF) << 48) | ((ulong)(minor & 0xFF) << 40) | ((ulong)(build & 0xFF) << 32) |
+			ulong data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | ((ulong)(build & 0xFF) << buildOffset) |
 				(0x00000000FFFFFFFFUL & m_data);
 			return new UnityVersion(data);
 		}
 		private UnityVersion From(int major, int minor, int build, UnityVersionType type)
 		{
-			ulong data = ((ulong)(major & 0xFFFF) << 48) | ((ulong)(minor & 0xFF) << 40) | ((ulong)(build & 0xFF) << 32) |
-				((ulong)((int)type & 0xFF) << 24) | (0x0000000000FFFFFFUL & m_data);
+			ulong data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | ((ulong)(build & 0xFF) << buildOffset) |
+				((ulong)((int)type & 0xFF) << typeOffset) | (0x0000000000FFFFFFUL & m_data);
 			return new UnityVersion(data);
 		}
 		private UnityVersion From(int major, int minor, int build, UnityVersionType type, int typeNumber)
 		{
-			ulong data = ((ulong)(major & 0xFFFF) << 48) | ((ulong)(minor & 0xFF) << 40) | ((ulong)(build & 0xFF) << 32)
-				| ((ulong)((int)type & 0xFF) << 24) | ((ulong)(typeNumber & 0xFF) << 16) | (0x000000000000FFFFUL & m_data);
+			ulong data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | ((ulong)(build & 0xFF) << buildOffset)
+				| ((ulong)((int)type & 0xFF) << typeOffset) | ((ulong)(typeNumber & 0xFF) << typeNumberOffset) | (0x000000000000FFFFUL & m_data);
 			return new UnityVersion(data);
 		}
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
