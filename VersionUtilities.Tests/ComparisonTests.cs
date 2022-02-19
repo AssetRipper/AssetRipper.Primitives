@@ -30,5 +30,24 @@ namespace AssetRipper.VersionUtilities.Tests
 			UnityVersion low = lowValue;
 			Assert.IsTrue(lowValue <= low);
 		}
+
+		[Test]
+		public void MinimumValueDefinition()
+		{
+			Assert.IsTrue(UnityVersion.MinVersion == new UnityVersion(ushort.MinValue, ushort.MinValue, ushort.MinValue, UnityVersionType.Alpha, byte.MinValue));
+		}
+
+		[Test]
+		public void MaximumValueDefinition()
+		{
+			Assert.IsTrue(UnityVersion.MaxVersion == new UnityVersion(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, (UnityVersionType)byte.MaxValue, byte.MaxValue));
+		}
+
+		[Test]
+		public void AnIncreaseOfTypeNumberMakesInequal()
+		{
+			Assert.IsTrue(UnityVersion.MinVersion < new UnityVersion(ushort.MinValue, ushort.MinValue, ushort.MinValue, UnityVersionType.Alpha, 1));
+			Assert.IsTrue(lowValue < new UnityVersion(lowValue.Major, lowValue.Minor, lowValue.Build, lowValue.Type, (byte)(lowValue.TypeNumber + 1)));
+		}
 	}
 }

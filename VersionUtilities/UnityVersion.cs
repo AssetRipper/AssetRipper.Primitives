@@ -6,10 +6,10 @@
 	public readonly partial struct UnityVersion
 	{
 		private const int majorOffset = 48;
-		private const int minorOffset = 40;
-		private const int buildOffset = 32;
-		private const int typeOffset = 24;
-		private const int typeNumberOffset = 16;
+		private const int minorOffset = 32;
+		private const int buildOffset = 16;
+		private const int typeOffset = 8;
+
 		private const ulong byteMask = 0xFFUL;
 		private const ulong ushortMask = 0xFFFFUL;
 
@@ -18,27 +18,27 @@
 		/// <summary>
 		/// The first number in a Unity version string
 		/// </summary>
-		public int Major => unchecked((int)((m_data >> majorOffset) & ushortMask));
+		public ushort Major => unchecked((ushort)((m_data >> majorOffset) & ushortMask));
 
 		/// <summary>
 		/// The second number in a Unity version string
 		/// </summary>
-		public int Minor => unchecked((int)((m_data >> minorOffset) & byteMask));
+		public ushort Minor => unchecked((ushort)((m_data >> minorOffset) & ushortMask));
 
 		/// <summary>
 		/// The third number in a Unity version string
 		/// </summary>
-		public int Build => unchecked((int)((m_data >> buildOffset) & byteMask));
+		public ushort Build => unchecked((ushort)((m_data >> buildOffset) & ushortMask));
 
 		/// <summary>
 		/// The letter in a Unity version string
 		/// </summary>
-		public UnityVersionType Type => (UnityVersionType)unchecked((int)((m_data >> typeOffset) & byteMask));
+		public UnityVersionType Type => (UnityVersionType)unchecked((byte)((m_data >> typeOffset) & byteMask));
 
 		/// <summary>
 		/// The last number in a Unity version string
 		/// </summary>
-		public int TypeNumber => unchecked((int)((m_data >> typeNumberOffset) & byteMask));
+		public byte TypeNumber => unchecked((byte)(m_data & byteMask));
 
 		/// <summary>
 		/// The minimum value this type can have
@@ -53,43 +53,43 @@
 		/// <summary>
 		/// Construct a new Unity version
 		/// </summary>
-		public UnityVersion(int major)
+		public UnityVersion(ushort major)
 		{
-			m_data = (ulong)(major & 0xFFFF) << majorOffset;
+			m_data = (ulong)major << majorOffset;
 		}
 
 		/// <summary>
 		/// Construct a new Unity version
 		/// </summary>
-		public UnityVersion(int major, int minor)
+		public UnityVersion(ushort major, ushort minor)
 		{
-			m_data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset);
+			m_data = ((ulong)major << majorOffset) | ((ulong)minor << minorOffset);
 		}
 
 		/// <summary>
 		/// Construct a new Unity version
 		/// </summary>
-		public UnityVersion(int major, int minor, int build)
+		public UnityVersion(ushort major, ushort minor, ushort build)
 		{
-			m_data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | ((ulong)(build & 0xFF) << buildOffset);
+			m_data = ((ulong)major << majorOffset) | ((ulong)minor << minorOffset) | ((ulong)build << buildOffset);
 		}
 
 		/// <summary>
 		/// Construct a new Unity version
 		/// </summary>
-		public UnityVersion(int major, int minor, int build, UnityVersionType type)
+		public UnityVersion(ushort major, ushort minor, ushort build, UnityVersionType type)
 		{
-			m_data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | ((ulong)(build & 0xFF) << buildOffset)
-				| ((ulong)((int)type & 0xFF) << typeOffset);
+			m_data = ((ulong)major << majorOffset) | ((ulong)minor << minorOffset) | ((ulong)build << buildOffset)
+				| ((ulong)type << typeOffset);
 		}
 
 		/// <summary>
 		/// Construct a new Unity version
 		/// </summary>
-		public UnityVersion(int major, int minor, int build, UnityVersionType type, int typeNumber)
+		public UnityVersion(ushort major, ushort minor, ushort build, UnityVersionType type, byte typeNumber)
 		{
-			m_data = ((ulong)(major & 0xFFFF) << majorOffset) | ((ulong)(minor & 0xFF) << minorOffset) | ((ulong)(build & 0xFF) << buildOffset)
-				| ((ulong)((int)type & 0xFF) << typeOffset) | ((ulong)(typeNumber & 0xFF) << typeNumberOffset);
+			m_data = ((ulong)major << majorOffset) | ((ulong)minor << minorOffset) | ((ulong)build << buildOffset)
+				| ((ulong)type << typeOffset) | typeNumber;
 		}
 
 		private UnityVersion(ulong data)

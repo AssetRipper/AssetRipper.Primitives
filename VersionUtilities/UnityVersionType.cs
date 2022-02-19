@@ -5,7 +5,7 @@ namespace AssetRipper.VersionUtilities
 	/// <summary>
 	/// An enumeration representing the letter in a Unity Version string
 	/// </summary>
-	public enum UnityVersionType
+	public enum UnityVersionType : byte
 	{
 		/// <summary>
 		/// a

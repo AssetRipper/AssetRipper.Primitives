@@ -162,7 +162,7 @@ namespace AssetRipper.VersionUtilities
 				typeNumber = typeNumber * 10 + c.ParseDigit();
 			}
 
-			return new UnityVersion(major, minor, build, versionType, typeNumber);
+			return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, versionType, (byte)typeNumber);
 		}
 	}
 }
