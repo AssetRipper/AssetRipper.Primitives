@@ -53,9 +53,18 @@ namespace AssetRipper.VersionUtilities
 		/// <param name="_this">A Unity version type</param>
 		/// <returns>The character this value represents</returns>
 		/// <exception cref="ArgumentOutOfRangeException">The type is not a valid value</exception>
-		public static char ToLiteral(this UnityVersionType _this)
+		[Obsolete("Changed to ToCharacter", true)]
+		public static char ToLiteral(this UnityVersionType _this) => _this.ToCharacter();
+
+		/// <summary>
+		/// Convert to the relevant character
+		/// </summary>
+		/// <param name="type">A Unity version type</param>
+		/// <returns>The character this value represents</returns>
+		/// <exception cref="ArgumentOutOfRangeException">The type is not a valid value</exception>
+		public static char ToCharacter(this UnityVersionType type)
 		{
-			return _this switch
+			return type switch
 			{
 				UnityVersionType.Alpha => 'a',
 				UnityVersionType.Beta => 'b',
@@ -63,7 +72,7 @@ namespace AssetRipper.VersionUtilities
 				UnityVersionType.Final => 'f',
 				UnityVersionType.Patch => 'p',
 				UnityVersionType.Experimental => 'x',
-				_ => throw new ArgumentOutOfRangeException(nameof(_this), $"Unsupported version type {_this}"),
+				_ => throw new ArgumentOutOfRangeException(nameof(type), $"Unsupported version type {type}"),
 			};
 		}
 	}
