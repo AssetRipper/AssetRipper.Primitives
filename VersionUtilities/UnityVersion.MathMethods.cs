@@ -1,4 +1,6 @@
-﻿namespace AssetRipper.VersionUtilities
+﻿using System;
+
+namespace AssetRipper.VersionUtilities
 {
 	public readonly partial struct UnityVersion
 	{
@@ -42,6 +44,40 @@
 			return left.m_data < right.m_data 
 				? right.m_data - left.m_data 
 				: left.m_data - right.m_data;
+		}
+
+		/// <summary>
+		/// Get the closest Unity version in an array of versions using <see cref="Distance(UnityVersion, UnityVersion)"/>
+		/// </summary>
+		/// <param name="versions">The Unity version array</param>
+		/// <returns>The closest Unity version</returns>
+		/// <exception cref="ArgumentNullException">The array is null</exception>
+		/// <exception cref="ArgumentException">The array is empty</exception>
+		public UnityVersion GetClosestVersion(UnityVersion[] versions)
+		{
+			if (versions is null)
+			{
+				throw new ArgumentNullException(nameof(versions));
+			}
+
+			if (versions.Length == 0)
+			{
+				throw new ArgumentException("Length cannot be zero", nameof(versions));
+			}
+
+			UnityVersion result = versions[0];
+			ulong currentDistance = Distance(this, result);
+			for(int i = 1; i < versions.Length; i++)
+			{
+				ulong newDistance = Distance(this, versions[i]);
+				if (newDistance < currentDistance)
+				{
+					currentDistance = newDistance;
+					result = versions[i];
+				}
+			}
+
+			return result;
 		}
 	}
 }
