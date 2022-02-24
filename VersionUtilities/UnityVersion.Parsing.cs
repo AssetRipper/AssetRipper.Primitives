@@ -13,7 +13,7 @@ namespace AssetRipper.VersionUtilities
 		/// <returns>A new string like 2019.4.3f1</returns>
 		public override string ToString()
 		{
-			return $"{Major}.{Minor}.{Build}{Type.ToLiteral()}{TypeNumber}";
+			return $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
 		}
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace AssetRipper.VersionUtilities
 			sb.Append(separator);
 			sb.Append(Build);
 			sb.Append(separator);
-			sb.Append(Type.ToLiteral());
+			sb.Append(Type.ToCharacter());
 			sb.Append(TypeNumber);
 			
 			if(hasExtension)
