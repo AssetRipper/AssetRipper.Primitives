@@ -1,5 +1,4 @@
 ﻿using AssetRipper.VersionUtilities.Extensions;
-using System;
 using System.IO;
 using System.Text;
 

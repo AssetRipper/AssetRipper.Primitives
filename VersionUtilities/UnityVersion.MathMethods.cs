@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AssetRipper.VersionUtilities
+﻿namespace AssetRipper.VersionUtilities
 {
 	public readonly partial struct UnityVersion
 	{

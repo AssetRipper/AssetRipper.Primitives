@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AssetRipper.VersionUtilities.Extensions
+﻿namespace AssetRipper.VersionUtilities.Extensions
 {
 	/// <summary>
 	/// Extensions for <see cref="char"/>
