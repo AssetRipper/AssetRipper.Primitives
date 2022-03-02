@@ -112,7 +112,7 @@
 		/// Converts this to its binary representation
 		/// </summary>
 		/// <returns>An unsigned integer having the same bits as this</returns>
-		public uint ToBits() => m_data;
+		public uint GetBits() => m_data;
 
 		/// <summary>
 		/// Converts a binary representation into its respective version

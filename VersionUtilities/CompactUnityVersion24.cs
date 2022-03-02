@@ -141,7 +141,7 @@
 		/// <summary>
 		/// Converts this to its binary representation
 		/// </summary>
-		public void ToBits(out byte majorMinorByte, out ushort buildTypeShort)
+		public void GetBits(out byte majorMinorByte, out ushort buildTypeShort)
 		{
 			majorMinorByte = m_MajorMinorByte;
 			buildTypeShort = m_BuildTypeShort;

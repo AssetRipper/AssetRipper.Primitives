@@ -96,5 +96,18 @@
 		{
 			m_data = data;
 		}
+
+		/// <summary>
+		/// Converts this to its binary representation
+		/// </summary>
+		/// <returns>An unsigned long integer having the same bits as this</returns>
+		public ulong GetBits() => m_data;
+
+		/// <summary>
+		/// Converts a binary representation into its respective version
+		/// </summary>
+		/// <param name="bits">An unsigned long integer having the relevant bits</param>
+		/// <returns>A new Unity version with the cooresponding bits</returns>
+		public static UnityVersion FromBits(ulong bits) => new UnityVersion(bits);
 	}
 }
