@@ -151,5 +151,14 @@
 		{
 			return (byte)type <= bitMask4 ? type : throw new ArgumentOutOfRangeException(nameof(type));
 		}
+
+		/// <summary>
+		/// Serialize the version as a string
+		/// </summary>
+		/// <returns>A new string like 2019.4.3f1</returns>
+		public override string ToString()
+		{
+			return $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
+		}
 	}
 }

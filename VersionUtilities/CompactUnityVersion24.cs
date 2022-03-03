@@ -190,5 +190,14 @@
 		{
 			return b <= bitMask7 ? b : throw new ArgumentOutOfRangeException(nameof(b));
 		}
+
+		/// <summary>
+		/// Serialize the version as a string
+		/// </summary>
+		/// <returns>A new string like 2019.4.3f1</returns>
+		public override string ToString()
+		{
+			return $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
+		}
 	}
 }
