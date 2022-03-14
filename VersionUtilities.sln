@@ -19,6 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{4B
 		Licenses\uTinyRipper.md = Licenses\uTinyRipper.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{B63714DC-6258-4032-9930-DFF0667624BC}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +44,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4BE414B8-5B2D-40C1-BA3E-7DBBD6F7D854} = {36D291AB-E468-4CE7-8DB3-2C46639FE5AE}
+		{B63714DC-6258-4032-9930-DFF0667624BC} = {36D291AB-E468-4CE7-8DB3-2C46639FE5AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {370218F4-B218-4C62-B7F7-D03B799F6349}
