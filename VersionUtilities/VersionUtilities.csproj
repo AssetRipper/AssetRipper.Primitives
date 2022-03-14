@@ -23,5 +23,9 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<DocumentationFile>bin\VersionUtilities.xml</DocumentationFile>
 	</PropertyGroup>
+	
+	<PropertyGroup Condition=" '$(TargetFramework)' != 'netframework3.5' and '$(TargetFramework)' != 'netframework4.0' ">
+		<IsTrimmable>true</IsTrimmable>
+	</PropertyGroup>
 
 </Project>
