@@ -70,7 +70,7 @@
 				UnityVersionType.Final => 'f',
 				UnityVersionType.Patch => 'p',
 				UnityVersionType.Experimental => 'x',
-				_ => throw new ArgumentOutOfRangeException(nameof(type), $"Unsupported version type {type}"),
+				_ => 'u',//unknown
 			};
 		}
 	}
