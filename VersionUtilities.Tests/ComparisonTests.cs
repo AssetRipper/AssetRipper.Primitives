@@ -49,5 +49,18 @@ namespace AssetRipper.VersionUtilities.Tests
 			Assert.IsTrue(UnityVersion.MinVersion < new UnityVersion(ushort.MinValue, ushort.MinValue, ushort.MinValue, UnityVersionType.Alpha, 1));
 			Assert.IsTrue(lowValue < new UnityVersion(lowValue.Major, lowValue.Minor, lowValue.Build, lowValue.Type, (byte)(lowValue.TypeNumber + 1)));
 		}
+
+		[Test]
+		public void AlphaZeroIsTheDefault()
+		{
+			Assert.IsTrue(new UnityVersion(2019, 1, 0) < new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1));
+		}
+
+		[Test]
+		public void ComparisonMethodsIgnoreUnspecifiedValues()
+		{
+			Assert.IsTrue(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).IsGreaterEqual(2019, 1, 0));
+			Assert.IsTrue(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).IsLessEqual(2019, 1, 0));
+		}
 	}
 }
