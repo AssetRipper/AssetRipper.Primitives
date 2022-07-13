@@ -35,5 +35,21 @@ namespace AssetRipper.VersionUtilities.Tests
 			UnityVersion expected = new UnityVersion(2343, 4, 5, UnityVersionType.Final, 7);
 			Assert.AreEqual(expected, UnityVersion.ParseFromDllName(dllName));
 		}
+		
+		[Test]
+		public void MajorMinorOnly()
+		{
+			string version = "2019.4";
+			UnityVersion expected = new UnityVersion(2019, 4, 0, UnityVersionType.Final, 0);
+			Assert.AreEqual(expected, UnityVersion.Parse(version));
+		}
+
+		[Test]
+		public void MajorMinorBuildOnly()
+		{
+			string version = "2019.4.3";
+			UnityVersion expected = new UnityVersion(2019, 4, 3, UnityVersionType.Final, 0);
+			Assert.AreEqual(expected, UnityVersion.Parse(version));
+		}
 	}
 }
