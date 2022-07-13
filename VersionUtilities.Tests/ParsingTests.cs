@@ -40,7 +40,7 @@ namespace AssetRipper.VersionUtilities.Tests
 		public void MajorMinorOnly()
 		{
 			string version = "2019.4";
-			UnityVersion expected = new UnityVersion(2019, 4, 0, UnityVersionType.Final, 0);
+			UnityVersion expected = new UnityVersion(2019, 4, 0, UnityVersionType.Final, 1);
 			Assert.AreEqual(expected, UnityVersion.Parse(version));
 		}
 
@@ -48,7 +48,7 @@ namespace AssetRipper.VersionUtilities.Tests
 		public void MajorMinorBuildOnly()
 		{
 			string version = "2019.4.3";
-			UnityVersion expected = new UnityVersion(2019, 4, 3, UnityVersionType.Final, 0);
+			UnityVersion expected = new UnityVersion(2019, 4, 3, UnityVersionType.Final, 1);
 			Assert.AreEqual(expected, UnityVersion.Parse(version));
 		}
 

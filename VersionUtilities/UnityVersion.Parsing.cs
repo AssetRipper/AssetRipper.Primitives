@@ -121,13 +121,13 @@ namespace AssetRipper.VersionUtilities
 				int major = int.Parse(match.Groups[1].Value);
 				int minor = int.Parse(match.Groups[2].Value);
 				int build = int.Parse(match.Groups[3].Value);
-				return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.Final, 0);
+				return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.Final, 1);
 			}
 			else if (majorMinorRegex.TryMatch(version, out match))
 			{
 				int major = int.Parse(match.Groups[1].Value);
 				int minor = int.Parse(match.Groups[2].Value);
-				return new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 0);
+				return new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 1);
 			}
 			else if (chinaRegex.TryMatch(version, out match))
 			{
