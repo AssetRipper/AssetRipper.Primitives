@@ -197,7 +197,7 @@
 		/// <returns>A new string like 2019.4.3f1</returns>
 		public override string ToString()
 		{
-			return $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
+			return ((UnityVersion)this).ToString();
 		}
 	}
 }

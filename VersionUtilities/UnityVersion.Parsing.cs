@@ -1,32 +1,38 @@
 ﻿using AssetRipper.VersionUtilities.Extensions;
-using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AssetRipper.VersionUtilities
 {
 	public readonly partial struct UnityVersion
 	{
+		private static readonly Regex majorMinorRegex = new Regex(@"^([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
+		private static readonly Regex majorMinorBuildRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
+		private static readonly Regex normalRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abfpx])([0-9]+)$", RegexOptions.Compiled);
+		private static readonly Regex chinaRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f([0-9]+)c1$", RegexOptions.Compiled);
+		
 		/// <summary>
 		/// Serialize the version as a string
 		/// </summary>
 		/// <returns>A new string like 2019.4.3f1</returns>
 		public override string ToString()
 		{
-			return $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
+			return ToString(false, false, false, false);
 		}
 
 		/// <summary>
 		/// Serialize the version as a string
 		/// </summary>
 		/// <param name="hasUnderscorePrefix">Include the _ prefix</param>
-		/// <param name="useUnderscores">Use underscores as separators instead of periods</param>
-		/// <param name="hasExtension">Include the .dll extension</param>
+		/// <param name="useUnderscoresAsSeparators">Use underscores as separators instead of periods</param>
+		/// <param name="hasDllExtension">Include the .dll extension</param>
+		/// <param name="hasSeparatorAfterBuild">Include a separator between <see cref="Build"/> and <see cref="Type"/></param>
 		/// <returns>A new string generated with those parameters</returns>
-		public string ToString(bool hasUnderscorePrefix, bool useUnderscores, bool hasExtension)
+		public string ToString(bool hasUnderscorePrefix, bool useUnderscoresAsSeparators, bool hasDllExtension, bool hasSeparatorAfterBuild)
 		{
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new();
 
-			char separator = useUnderscores ? '_' : '.';
+			char separator = useUnderscoresAsSeparators ? '_' : '.';
 
 			if(hasUnderscorePrefix)
 				sb.Append('_');
@@ -36,11 +42,23 @@ namespace AssetRipper.VersionUtilities
 			sb.Append(Minor);
 			sb.Append(separator);
 			sb.Append(Build);
-			sb.Append(separator);
-			sb.Append(Type.ToCharacter());
-			sb.Append(TypeNumber);
+			if (hasSeparatorAfterBuild)
+			{
+				sb.Append(separator);
+			}
+			if (Type == UnityVersionType.China)
+			{
+				sb.Append('f');
+				sb.Append(TypeNumber);
+				sb.Append("c1");
+			}
+			else
+			{
+				sb.Append(Type.ToCharacter());
+				sb.Append(TypeNumber);
+			}
 			
-			if(hasExtension)
+			if(hasDllExtension)
 				sb.Append(".dll");
 
 			return sb.ToString();
@@ -89,79 +107,40 @@ namespace AssetRipper.VersionUtilities
 				throw new ArgumentNullException(nameof(version));
 			}
 
-			int major = 0;
-			int minor = 0;
-			int build = 0;
-			UnityVersionType versionType = UnityVersionType.Final;
-			int typeNumber = 0;
-
-			using StringReader reader = new StringReader(version);
-
-			while (true)
+			if (normalRegex.TryMatch(version, out Match? match))
 			{
-				int symb = reader.Read();
-				if (symb == -1)
-				{
-					throw new ArgumentException($"Invalid version formatting: {version}", nameof(version));
-				}
-				char c = (char)symb;
-				if (c == '.')
-				{
-					break;
-				}
-
-				major = major * 10 + c.ParseDigit();
+				int major = int.Parse(match.Groups[1].Value);
+				int minor = int.Parse(match.Groups[2].Value);
+				int build = int.Parse(match.Groups[3].Value);
+				char type = match.Groups[4].Value[0];
+				int typeNumber = int.Parse(match.Groups[5].Value);
+				return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type.ToUnityVersionType(), (byte)typeNumber);
 			}
-
-			while (true)
+			else if (majorMinorBuildRegex.TryMatch(version, out match))
 			{
-				int symb = reader.Read();
-				if (symb == -1)
-				{
-					break;
-				}
-				char c = (char)symb;
-				if (c == '.')
-				{
-					break;
-				}
-
-				minor = minor * 10 + c.ParseDigit();
+				int major = int.Parse(match.Groups[1].Value);
+				int minor = int.Parse(match.Groups[2].Value);
+				int build = int.Parse(match.Groups[3].Value);
+				return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.Final, 0);
 			}
-
-			while (true)
+			else if (majorMinorRegex.TryMatch(version, out match))
 			{
-				int symb = reader.Read();
-				if (symb == -1)
-				{
-					break;
-				}
-
-				char c = (char)symb;
-				if (char.IsDigit(c))
-				{
-					build = build * 10 + c.ParseDigit();
-				}
-				else
-				{
-					versionType = c.ToUnityVersionType();
-					break;
-				}
+				int major = int.Parse(match.Groups[1].Value);
+				int minor = int.Parse(match.Groups[2].Value);
+				return new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 0);
 			}
-
-			while (true)
+			else if (chinaRegex.TryMatch(version, out match))
 			{
-				int symb = reader.Read();
-				if (symb == -1)
-				{
-					break;
-				}
-
-				char c = (char)symb;
-				typeNumber = typeNumber * 10 + c.ParseDigit();
+				int major = int.Parse(match.Groups[1].Value);
+				int minor = int.Parse(match.Groups[2].Value);
+				int build = int.Parse(match.Groups[3].Value);
+				int typeNumber = int.Parse(match.Groups[4].Value);
+				return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.China, (byte)typeNumber);
 			}
-
-			return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, versionType, (byte)typeNumber);
+			else
+			{
+				throw new ArgumentException($"Invalid version format: {version}", nameof(version));
+			}
 		}
 	}
 }

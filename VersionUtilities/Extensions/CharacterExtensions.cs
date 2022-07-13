@@ -5,11 +5,6 @@
 	/// </summary>
 	public static class CharacterExtensions
 	{
-		internal static int ParseDigit(this char _this)
-		{
-			return _this - '0';
-		}
-
 		/// <summary>
 		/// Parse a character into a Unity Version Type
 		/// </summary>

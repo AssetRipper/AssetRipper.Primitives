@@ -51,5 +51,17 @@ namespace AssetRipper.VersionUtilities.Tests
 			UnityVersion expected = new UnityVersion(2019, 4, 3, UnityVersionType.Final, 0);
 			Assert.AreEqual(expected, UnityVersion.Parse(version));
 		}
+
+		[Test]
+		public void ChinaVersionString()
+		{
+			string version = "2020.3.15f2c1";
+			UnityVersion expected = new UnityVersion(2020, 3, 15, UnityVersionType.China, 2);
+			Assert.Multiple(() =>
+			{
+				Assert.AreEqual(expected, UnityVersion.Parse(version));
+				Assert.AreEqual(version, expected.ToString());
+			});
+		}
 	}
 }
