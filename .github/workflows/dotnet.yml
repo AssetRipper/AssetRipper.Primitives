@@ -7,6 +7,23 @@ on:
     branches: [ master ]
 
 jobs:
+  net7:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3.0.3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --framework net7.0 --no-restore
+    - name: Test
+      run: dotnet test --framework net7.0 --no-build --verbosity normal
+
   net6:
 
     runs-on: ubuntu-latest
