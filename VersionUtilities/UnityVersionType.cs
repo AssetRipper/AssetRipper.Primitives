@@ -48,15 +48,6 @@ public static class UnityVersionTypeExtentions
 	/// <summary>
 	/// Convert to the relevant character
 	/// </summary>
-	/// <param name="_this">A Unity version type</param>
-	/// <returns>The character this value represents</returns>
-	/// <exception cref="ArgumentOutOfRangeException">The type is not a valid value</exception>
-	[Obsolete("Changed to ToCharacter", true)]
-	public static char ToLiteral(this UnityVersionType _this) => _this.ToCharacter();
-
-	/// <summary>
-	/// Convert to the relevant character
-	/// </summary>
 	/// <param name="type">A Unity version type</param>
 	/// <returns>The character this value represents</returns>
 	/// <exception cref="ArgumentOutOfRangeException">The type is not a valid value</exception>
