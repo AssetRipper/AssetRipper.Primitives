@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-
-namespace AssetRipper.VersionUtilities.Tests;
+﻿namespace AssetRipper.VersionUtilities.Tests;
 
 public class ParsingTests
 {

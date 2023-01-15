@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace AssetRipper.VersionUtilities.Extensions;
+﻿namespace AssetRipper.VersionUtilities.Extensions;
 
 /// <summary>
 /// Unity version extension methods for <see cref="BinaryWriter"/>
