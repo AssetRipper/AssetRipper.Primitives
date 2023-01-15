@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netframework3.5;netframework4.0;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>netframework3.5;netframework4.0;netstandard2.0;net5.0;net6.0;net7.0</TargetFrameworks>
 		<LangVersion>Latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
@@ -10,7 +10,7 @@
 		<Authors>ds5678</Authors>
 		<Company>AssetRipper</Company>
 		<Version>1.2.1.0</Version>
-		<AssemblyVersion>1.2.1.0</AssemblyVersion>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<PackageId>AssetRipper.VersionUtilities</PackageId>
 		<PackageTags>C# version unity unity3d</PackageTags>
 		<RepositoryUrl>https://github.com/AssetRipper/VersionUtilities</RepositoryUrl>
@@ -28,8 +28,12 @@
 		<IsTrimmable>true</IsTrimmable>
 	</PropertyGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netframework3.5' or '$(TargetFramework)' == 'netframework4.0' or '$(TargetFramework)' == 'netstandard2.0' ">
-	  <PackageReference Include="Nullable" Version="1.3.1">
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="PolySharp" Version="1.10.0">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
