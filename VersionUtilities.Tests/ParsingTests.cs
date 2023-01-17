@@ -53,8 +53,10 @@ public class ParsingTests
 	[Test]
 	public void ChinaVersionString()
 	{
-		string version = "2020.3.15f2c1";
-		UnityVersion expected = new UnityVersion(2020, 3, 15, UnityVersionType.China, 2);
+		string version = "2021.3.11f1c2";//This is an actual version from a game.
+										 //Versions like 2019.3.0f2 and 2020.3.15f2 don't have corresponding Chinese versions.
+										 //Source: https://unity.cn/releases
+		UnityVersion expected = new UnityVersion(2021, 3, 11, UnityVersionType.China, 2);
 		Assert.Multiple(() =>
 		{
 			Assert.AreEqual(expected, UnityVersion.Parse(version));

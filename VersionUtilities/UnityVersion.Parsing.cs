@@ -9,7 +9,7 @@ public readonly partial struct UnityVersion
 	private static readonly Regex majorMinorRegex = new Regex(@"^([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
 	private static readonly Regex majorMinorBuildRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
 	private static readonly Regex normalRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abfpx])([0-9]+)$", RegexOptions.Compiled);
-	private static readonly Regex chinaRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f([0-9]+)c1$", RegexOptions.Compiled);
+	private static readonly Regex chinaRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f1c([0-9]+)$", RegexOptions.Compiled);
 	
 	/// <summary>
 	/// Serialize the version as a string
@@ -48,9 +48,9 @@ public readonly partial struct UnityVersion
 		}
 		if (Type == UnityVersionType.China)
 		{
-			sb.Append('f');
+			sb.Append("f1");
+			sb.Append('c');
 			sb.Append(TypeNumber);
-			sb.Append("c1");
 		}
 		else
 		{
