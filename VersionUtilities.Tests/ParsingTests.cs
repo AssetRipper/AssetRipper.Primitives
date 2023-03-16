@@ -8,6 +8,7 @@ public class ParsingTests
 	[TestCase("4.2.2f1", 4, 2, 2, UnityVersionType.Final, 1, false)]
 	[TestCase("4.2.2f1\n1", 4, 2, 2, UnityVersionType.Final, 1, true)]
 	[TestCase("2343.4.5f7", 2343, 4, 5, UnityVersionType.Final, 7, false)]
+	[TestCase("2019.2.2f1c2\n2", 2019, 2, 2, UnityVersionType.China, 2, true)]//Not a real version
 	public void UnityVersionParsesCorrectly(string versionString, int major, int minor, int build, UnityVersionType type, int typeNumber, bool customEngine)
 	{
 		UnityVersion expected = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type, (byte)typeNumber);
