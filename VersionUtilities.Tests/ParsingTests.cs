@@ -5,19 +5,23 @@ namespace AssetRipper.VersionUtilities.Tests;
 
 public class ParsingTests
 {
-	[TestCase("4.2.2f1", 4, 2, 2, UnityVersionType.Final, 1)]
-	[TestCase("2343.4.5f7", 2343, 4, 5, UnityVersionType.Final, 7)]
-	public void UnityVersionParsesCorrectly(string version, int major, int minor, int build, UnityVersionType type, int typeNumber)
+	[TestCase("4.2.2f1", 4, 2, 2, UnityVersionType.Final, 1, false)]
+	[TestCase("4.2.2f1\n1", 4, 2, 2, UnityVersionType.Final, 1, true)]
+	[TestCase("2343.4.5f7", 2343, 4, 5, UnityVersionType.Final, 7, false)]
+	public void UnityVersionParsesCorrectly(string versionString, int major, int minor, int build, UnityVersionType type, int typeNumber, bool customEngine)
 	{
 		UnityVersion expected = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type, (byte)typeNumber);
-		Assert.AreEqual(expected, UnityVersion.Parse(version));
+		UnityVersion parsedVersion = UnityVersion.Parse(versionString, out bool parsedCustomEngine);
+		Assert.AreEqual(customEngine, parsedCustomEngine);
+		Assert.AreEqual(expected, parsedVersion);
 	}
 
 	[TestCaseSource(nameof(GenerateRandomVersions), new object[] { 20 })]
 	public void UnityVersionToStringParsesCorrectly(UnityVersion version)
 	{
 		string versionString = version.ToString();
-		UnityVersion parsedVersion = UnityVersion.Parse(versionString);
+		UnityVersion parsedVersion = UnityVersion.Parse(versionString, out bool customEngine);
+		Assert.That(customEngine, Is.False);
 		Assert.AreEqual(version, parsedVersion);
 	}
 
