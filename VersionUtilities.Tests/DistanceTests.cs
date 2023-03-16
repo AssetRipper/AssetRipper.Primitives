@@ -16,14 +16,14 @@ public class DistanceTests
 	{
 		ulong distance1 = UnityVersion.Distance(version4, version5);
 		ulong distance2 = UnityVersion.Distance(version5, version4);
-		Assert.IsTrue(distance1 == distance2);
+		Assert.That(distance1, Is.EqualTo(distance2));
 	}
 
 	[Test]
 	public void DistanceIsZeroForEquivalentVersions()
 	{
 		ulong distance = UnityVersion.Distance(version4, version4);
-		Assert.IsTrue(distance == 0);
+		Assert.That(distance, Is.EqualTo(0));
 	}
 
 	[Test]
@@ -31,7 +31,7 @@ public class DistanceTests
 	{
 		UnityVersion version = new UnityVersion(6, 1);
 		UnityVersion closest = version.GetClosestVersion(versionArray);
-		Assert.IsTrue(closest == version6);
+		Assert.That(closest, Is.EqualTo(version6));
 	}
 
 	[Test]
@@ -39,6 +39,6 @@ public class DistanceTests
 	{
 		UnityVersion version = new UnityVersion(5, 4, 9);
 		UnityVersion closest = version.GetClosestVersion(versionArray);
-		Assert.IsTrue(closest == version5);
+		Assert.That(closest, Is.EqualTo(version5));
 	}
 }
