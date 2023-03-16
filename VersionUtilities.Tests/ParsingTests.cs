@@ -2,11 +2,11 @@
 
 public class ParsingTests
 {
-	[Test]
-	public void UnityVersionParsesCorrectly()
+	[TestCase("4.2.2f1", 4, 2, 2, UnityVersionType.Final, 1)]
+	[TestCase("2343.4.5f7", 2343, 4, 5, UnityVersionType.Final, 7)]
+	public void UnityVersionParsesCorrectly(string version, int major, int minor, int build, UnityVersionType type, int typeNumber)
 	{
-		string version = "2343.4.5f7";
-		UnityVersion expected = new UnityVersion(2343, 4, 5, UnityVersionType.Final, 7);
+		UnityVersion expected = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type, (byte)typeNumber);
 		Assert.AreEqual(expected, UnityVersion.Parse(version));
 	}
 
