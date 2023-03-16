@@ -74,26 +74,6 @@ public readonly partial struct UnityVersion
 	}
 
 	/// <summary>
-	/// Parse a dll name like _2019_4_3f1.dll
-	/// </summary>
-	/// <param name="dllName">The name of a dll file</param>
-	/// <returns>The parsed Unity version</returns>
-	/// <exception cref="ArgumentNullException">If the string is null or empty</exception>
-	public static UnityVersion ParseFromDllName(string dllName)
-	{
-		if (string.IsNullOrEmpty(dllName))
-		{
-			throw new ArgumentNullException(nameof(dllName));
-		}
-		if (dllName[0] == '_')
-		{
-			dllName = dllName.Substring(1);
-		}
-
-		return Parse(dllName.Replace('_', '.').Replace(".dll", ""));
-	}
-
-	/// <summary>
 	/// Parse a normal Unity version string
 	/// </summary>
 	/// <param name="version">A string to parse</param>
