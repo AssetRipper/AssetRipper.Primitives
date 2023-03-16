@@ -17,51 +17,9 @@ public readonly partial struct UnityVersion
 	/// <returns>A new string like 2019.4.3f1</returns>
 	public override string ToString()
 	{
-		return ToString(false, false, false, false);
-	}
-
-	/// <summary>
-	/// Serialize the version as a string
-	/// </summary>
-	/// <param name="hasUnderscorePrefix">Include the _ prefix</param>
-	/// <param name="useUnderscoresAsSeparators">Use underscores as separators instead of periods</param>
-	/// <param name="hasDllExtension">Include the .dll extension</param>
-	/// <param name="hasSeparatorAfterBuild">Include a separator between <see cref="Build"/> and <see cref="Type"/></param>
-	/// <returns>A new string generated with those parameters</returns>
-	public string ToString(bool hasUnderscorePrefix, bool useUnderscoresAsSeparators, bool hasDllExtension, bool hasSeparatorAfterBuild)
-	{
-		StringBuilder sb = new();
-
-		char separator = useUnderscoresAsSeparators ? '_' : '.';
-
-		if(hasUnderscorePrefix)
-			sb.Append('_');
-
-		sb.Append(Major);
-		sb.Append(separator);
-		sb.Append(Minor);
-		sb.Append(separator);
-		sb.Append(Build);
-		if (hasSeparatorAfterBuild)
-		{
-			sb.Append(separator);
-		}
-		if (Type == UnityVersionType.China)
-		{
-			sb.Append("f1");
-			sb.Append('c');
-			sb.Append(TypeNumber);
-		}
-		else
-		{
-			sb.Append(Type.ToCharacter());
-			sb.Append(TypeNumber);
-		}
-		
-		if(hasDllExtension)
-			sb.Append(".dll");
-
-		return sb.ToString();
+		return Type == UnityVersionType.China
+			? $"{Major}.{Minor}.{Build}f1c{TypeNumber}"
+			: $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
 	}
 
 	/// <summary>

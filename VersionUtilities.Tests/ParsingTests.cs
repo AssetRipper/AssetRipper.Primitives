@@ -1,4 +1,7 @@
-﻿namespace AssetRipper.VersionUtilities.Tests;
+﻿using NUnit.Framework.Internal;
+using System.Collections.Generic;
+
+namespace AssetRipper.VersionUtilities.Tests;
 
 public class ParsingTests
 {
@@ -8,6 +11,14 @@ public class ParsingTests
 	{
 		UnityVersion expected = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type, (byte)typeNumber);
 		Assert.AreEqual(expected, UnityVersion.Parse(version));
+	}
+
+	[TestCaseSource(nameof(GenerateRandomVersions), new object[] { 20 })]
+	public void UnityVersionToStringParsesCorrectly(UnityVersion version)
+	{
+		string versionString = version.ToString();
+		UnityVersion parsedVersion = UnityVersion.Parse(versionString);
+		Assert.AreEqual(version, parsedVersion);
 	}
 
 	[Test]
@@ -39,5 +50,14 @@ public class ParsingTests
 			Assert.AreEqual(expected, UnityVersion.Parse(version));
 			Assert.AreEqual(version, expected.ToString());
 		});
+	}
+
+	private static IEnumerable<UnityVersion> GenerateRandomVersions(int count)
+	{
+		Randomizer random = TestContext.CurrentContext.Random;
+		for (int i = 0; i < count; i++)
+		{
+			yield return new UnityVersion(random.NextUShort(), random.NextUShort(), random.NextUShort(), random.NextEnum<UnityVersionType>(), random.NextByte());
+		}
 	}
 }
