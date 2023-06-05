@@ -1,5 +1,4 @@
 ﻿using AssetRipper.VersionUtilities.Extensions;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace AssetRipper.VersionUtilities;
@@ -8,7 +7,7 @@ public readonly partial struct UnityVersion
 {
 	private static readonly Regex majorMinorRegex = new Regex(@"^([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
 	private static readonly Regex majorMinorBuildRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
-	private static readonly Regex normalRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abfpx])([0-9]+)(\n[0-9]+)?$", RegexOptions.Compiled);
+	private static readonly Regex normalRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abcfpx])([0-9]+)(\n[0-9]+)?$", RegexOptions.Compiled);
 	private static readonly Regex chinaRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f1c([0-9]+)(\n[0-9]+)?$", RegexOptions.Compiled);
 	
 	/// <summary>
