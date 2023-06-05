@@ -11,18 +11,44 @@ public readonly partial struct UnityVersion
 	private static readonly Regex chinaRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f1c([0-9]+)(\n[0-9]+)?$", RegexOptions.Compiled);
 	
 	/// <summary>
-	/// Serialize the version as a string
+	/// Serialize the version as a string using <see cref="UnityVersionFormatFlags.Default"/>.
 	/// </summary>
 	/// <returns>A new string like 2019.4.3f1</returns>
-	public override string ToString()
+	public override string ToString() => ToString(UnityVersionFormatFlags.Default);
+
+	/// <summary>
+	/// Serialize the version as a string
+	/// </summary>
+	/// <param name="flags">The flags to control how the version is formatted</param>
+	/// <returns>A new string containing the formatted version.</returns>
+	public string ToString(UnityVersionFormatFlags flags)
 	{
-		return Type == UnityVersionType.China
-			? $"{Major}.{Minor}.{Build}f1c{TypeNumber}"
-			: $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}";
+		return (flags & UnityVersionFormatFlags.ExcludeType) != 0
+			? ToStringWithoutType()
+			: Type is not UnityVersionType.China || (flags & UnityVersionFormatFlags.UseShortChineseFormat) != 0
+				? $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}"
+				: $"{Major}.{Minor}.{Build}f1c{TypeNumber}";
 	}
 
 	/// <summary>
 	/// Serialize the version as a string
+	/// </summary>
+	/// <param name="flags">The flags to control how the version is formatted</param>
+	/// <param name="customEngineNumber">The custom engine number to be appended</param>
+	/// <returns>A new string containing the formatted version.</returns>
+	public string ToString(UnityVersionFormatFlags flags, int? customEngineNumber)
+	{
+		return customEngineNumber is null
+			? ToString(flags)
+			: (flags & UnityVersionFormatFlags.ExcludeType) != 0
+				? ToStringWithoutType()
+				: Type is not UnityVersionType.China || (flags & UnityVersionFormatFlags.UseShortChineseFormat) != 0
+					? $"{Major}.{Minor}.{Build}{Type.ToCharacter()}{TypeNumber}\n{customEngineNumber}"
+					: $"{Major}.{Minor}.{Build}f1c{TypeNumber}\n{customEngineNumber}";
+	}
+
+	/// <summary>
+	/// Serialize the version as a string using only <see cref="Major"/>, <see cref="Minor"/>, and <see cref="Build"/>.
 	/// </summary>
 	/// <returns>A new string like 2019.4.3</returns>
 	public string ToStringWithoutType()
@@ -47,7 +73,7 @@ public readonly partial struct UnityVersion
 	/// <returns>The parsed Unity version</returns>
 	/// <exception cref="ArgumentNullException">If the string is null or empty</exception>
 	/// <exception cref="ArgumentException">If the string is in an invalid format</exception>
-	public static UnityVersion Parse(string version, out bool customEngine)
+	public static UnityVersion Parse(string version, out int? customEngine)
 	{
 		if (string.IsNullOrEmpty(version))
 		{
@@ -61,7 +87,7 @@ public readonly partial struct UnityVersion
 			int build = int.Parse(match.Groups[3].Value);
 			char type = match.Groups[4].Value[0];
 			int typeNumber = int.Parse(match.Groups[5].Value);
-			customEngine = match.Groups[6].Length > 0;
+			customEngine = ParseNullableInteger(match.Groups[6]);
 			return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type.ToUnityVersionType(), (byte)typeNumber);
 		}
 		else if (majorMinorBuildRegex.TryMatch(version, out match))
@@ -69,14 +95,14 @@ public readonly partial struct UnityVersion
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
 			int build = int.Parse(match.Groups[3].Value);
-			customEngine = false;
+			customEngine = null;
 			return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.Final, 1);
 		}
 		else if (majorMinorRegex.TryMatch(version, out match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
-			customEngine = false;
+			customEngine = null;
 			return new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 1);
 		}
 		else if (chinaRegex.TryMatch(version, out match))
@@ -85,12 +111,14 @@ public readonly partial struct UnityVersion
 			int minor = int.Parse(match.Groups[2].Value);
 			int build = int.Parse(match.Groups[3].Value);
 			int typeNumber = int.Parse(match.Groups[4].Value);
-			customEngine = match.Groups[5].Length > 0;
+			customEngine = ParseNullableInteger(match.Groups[5]);
 			return new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.China, (byte)typeNumber);
 		}
 		else
 		{
 			throw new ArgumentException($"Invalid version format: {version}", nameof(version));
 		}
+
+		static int? ParseNullableInteger(Capture capture) => capture.Length == 0 ? null : int.Parse(capture.Value);
 	}
 }
