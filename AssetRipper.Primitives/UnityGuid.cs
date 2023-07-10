@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace AssetRipper.Primitives;
 
+[JsonConverter(typeof(UnityGuidJsonConverter))]
 public readonly record struct UnityGuid
 {
 	public UnityGuid(Guid guid)
