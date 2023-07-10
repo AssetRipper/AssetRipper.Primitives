@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.VersionUtilities;
+﻿namespace AssetRipper.Primitives;
 
 /// <summary>
 /// Flags used when formatting a <see cref="UnityVersion"/>

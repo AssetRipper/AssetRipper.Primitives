@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.VersionUtilities;
+﻿namespace AssetRipper.Primitives;
 
 /// <summary>
 /// An enumeration representing the letter in a Unity Version string

@@ -1,7 +1,7 @@
-﻿using AssetRipper.VersionUtilities.Extensions;
+﻿using AssetRipper.Primitives.Extensions;
 using System.Text.RegularExpressions;
 
-namespace AssetRipper.VersionUtilities;
+namespace AssetRipper.Primitives;
 
 public readonly partial struct UnityVersion
 {

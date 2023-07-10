@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.VersionUtilities;
+﻿namespace AssetRipper.Primitives;
 partial struct UnityVersion
 {
 	/// <summary>

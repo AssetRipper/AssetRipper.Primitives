@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework.Internal;
 using System.Collections.Generic;
 
-namespace AssetRipper.VersionUtilities.Tests;
+namespace AssetRipper.Primitives.Tests;
 
 public class ParsingTests
 {

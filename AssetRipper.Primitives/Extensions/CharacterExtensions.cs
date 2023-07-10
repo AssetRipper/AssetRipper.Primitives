@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.VersionUtilities.Extensions;
+﻿namespace AssetRipper.Primitives.Extensions;
 
 /// <summary>
 /// Extensions for <see cref="char"/>

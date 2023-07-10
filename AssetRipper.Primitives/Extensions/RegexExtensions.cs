@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace AssetRipper.VersionUtilities.Extensions;
+namespace AssetRipper.Primitives.Extensions;
 
 internal static class RegexExtensions
 {

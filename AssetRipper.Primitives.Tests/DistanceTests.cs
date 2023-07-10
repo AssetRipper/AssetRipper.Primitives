@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.VersionUtilities.Tests;
+﻿namespace AssetRipper.Primitives.Tests;
 
 public class DistanceTests
 {

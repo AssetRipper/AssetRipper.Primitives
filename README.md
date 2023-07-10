@@ -1,8 +1,8 @@
-# AssetRipper.VersionUtilities
+# AssetRipper.Primitives
 
-[![](https://img.shields.io/nuget/v/AssetRipper.VersionUtilities)](https://www.nuget.org/packages/AssetRipper.VersionUtilities)
+[![](https://img.shields.io/nuget/v/AssetRipper.Primitives)](https://www.nuget.org/packages/AssetRipper.Primitives)
 
-Managed library for handling Unity versions
+Managed library for primitive types used in AssetRipper projects.
 
 # Legal Disclaimers
 

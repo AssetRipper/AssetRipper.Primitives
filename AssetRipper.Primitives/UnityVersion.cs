@@ -1,4 +1,4 @@
-﻿namespace AssetRipper.VersionUtilities;
+﻿namespace AssetRipper.Primitives;
 
 /// <summary>
 /// A value type for holding Unity versions
