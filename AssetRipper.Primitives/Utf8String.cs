@@ -79,7 +79,11 @@ public sealed class Utf8String : IEquatable<Utf8String>
 	[return: NotNullIfNotNull(nameof(@string))]
 	public static implicit operator Utf8String?(string? @string)
 	{
-		return @string is null ? null : new Utf8String(@string);
+		return @string is null
+			? null
+			: @string.Length == 0
+				? Empty
+				: new Utf8String(@string);
 	}
 
 	[return: NotNullIfNotNull(nameof(utf8String))]
@@ -90,7 +94,7 @@ public sealed class Utf8String : IEquatable<Utf8String>
 
 	public static implicit operator Utf8String(ReadOnlySpan<byte> data)
 	{
-		return new Utf8String(data);
+		return data.Length == 0 ? Empty : new Utf8String(data);
 	}
 
 	public static implicit operator ReadOnlySpan<byte>(Utf8String? utf8String)
