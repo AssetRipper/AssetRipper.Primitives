@@ -59,7 +59,7 @@ public class Utf8StringTests
 	public void ConcatenationBetweenFourUtf8StringsWorks()
 	{
 		Utf8String string1 = "hello"u8;
-		Utf8String string2 = "world"u8;
+		Utf8String string2 = " world"u8;
 		Utf8String string3 = "!"u8;
 		Utf8String string4 = ", how are you?"u8;
 		Utf8String concatenated = Utf8String.Concat(string1, string2, string3, string4);
