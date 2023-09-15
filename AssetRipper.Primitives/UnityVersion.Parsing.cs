@@ -64,11 +64,10 @@ public readonly partial struct UnityVersion
 	/// <summary>
 	/// Parse a normal Unity version string
 	/// </summary>
-	/// <param name="version">A string to parse</param>
+	/// <param name="s">A string to parse</param>
 	/// <returns>The parsed Unity version</returns>
-	/// <exception cref="ArgumentNullException">If the string is null or empty</exception>
 	/// <exception cref="ArgumentException">If the string is in an invalid format</exception>
-	public static UnityVersion Parse(string version) => Parse(version, out _);
+	public static UnityVersion Parse(string s) => Parse(s, out _);
 
 	/// <summary>
 	/// Parse a normal Unity version string
