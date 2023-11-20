@@ -68,8 +68,8 @@ public class ComparisonTests
 	{
 		Assert.Multiple(() =>
 		{
-			Assert.That(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).IsGreaterEqual(2019, 1, 0), Is.True);
-			Assert.That(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).IsLessEqual(2019, 1, 0), Is.True);
+			Assert.That(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).GreaterThanOrEquals(2019, 1, 0), Is.True);
+			Assert.That(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).LessThanOrEquals(2019, 1, 0), Is.True);
 		});
 	}
 }
