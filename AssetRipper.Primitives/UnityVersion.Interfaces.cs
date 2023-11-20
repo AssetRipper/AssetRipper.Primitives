@@ -27,12 +27,47 @@ public readonly partial struct UnityVersion : IEquatable<UnityVersion>, ICompara
 	/// </returns>
 	public int CompareTo(UnityVersion other)
 	{
-		if (this > other)
-			return 1;
-		else if (this < other)
-			return -1;
-		else
+		//Unity 6 is sequentially equivalent to Unity 2024 because
+		//they switched to back to the old versioning scheme.
+		const ushort FirstNewVersion = 6;
+
+		if (this == other)
+		{
 			return 0;
+		}
+
+		if (UsesYearNumbering(this))
+		{
+			if (UsesYearNumbering(other))
+			{
+				return CompareByData(this, other);
+			}
+			else
+			{
+				return other.Major < FirstNewVersion ? 1 : -1;
+			}
+		}
+		else
+		{
+			if (UsesYearNumbering(other))
+			{
+				return Major < FirstNewVersion ? -1 : 1;
+			}
+			else
+			{
+				return CompareByData(this, other);
+			}
+		}
+
+		static int CompareByData(UnityVersion x, UnityVersion y)
+		{
+			return x.m_data < y.m_data ? -1 : 1;
+		}
+
+		static bool UsesYearNumbering(UnityVersion version)
+		{
+			return version.Major is >= 2017 and <= 2023;
+		}
 	}
 
 	/// <summary>

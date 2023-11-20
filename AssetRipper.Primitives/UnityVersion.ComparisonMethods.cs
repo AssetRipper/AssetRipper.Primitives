@@ -6,7 +6,7 @@ public readonly partial struct UnityVersion
 	private const ulong subMinorMask = 0x00000000FFFFFFFFUL;
 	private const ulong subBuildMask = 0x000000000000FFFFUL;
 	private const ulong subTypeMask = 0x00000000000000FFUL;
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 	public bool Equals(ushort major) => this == From(major);
 	public bool Equals(ushort major, ushort minor) => this == From(major, minor);
 	public bool Equals(ushort major, ushort minor, ushort build) => this == From(major, minor, build);
@@ -64,5 +64,4 @@ public readonly partial struct UnityVersion
 			((ulong)(ushort)type << typeOffset) | subTypeMask & m_data;
 		return new UnityVersion(data);
 	}
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

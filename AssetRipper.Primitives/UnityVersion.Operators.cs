@@ -32,7 +32,7 @@ public readonly partial struct UnityVersion
 	/// <returns></returns>
 	public static bool operator >(UnityVersion left, UnityVersion right)
 	{
-		return left.m_data > right.m_data;
+		return left.CompareTo(right) > 0;
 	}
 
 	/// <summary>
@@ -43,7 +43,7 @@ public readonly partial struct UnityVersion
 	/// <returns></returns>
 	public static bool operator >=(UnityVersion left, UnityVersion right)
 	{
-		return left.m_data >= right.m_data;
+		return left.CompareTo(right) >= 0;
 	}
 
 	/// <summary>
@@ -54,7 +54,7 @@ public readonly partial struct UnityVersion
 	/// <returns></returns>
 	public static bool operator <(UnityVersion left, UnityVersion right)
 	{
-		return left.m_data < right.m_data;
+		return left.CompareTo(right) < 0;
 	}
 
 	/// <summary>
@@ -65,6 +65,6 @@ public readonly partial struct UnityVersion
 	/// <returns></returns>
 	public static bool operator <=(UnityVersion left, UnityVersion right)
 	{
-		return left.m_data <= right.m_data;
+		return left.CompareTo(right) <= 0;
 	}
 }
