@@ -77,7 +77,14 @@ public readonly record struct UnityGuid
 
 	public override string ToString()
 	{
-		Span<char> span = stackalloc char[32]
+		Span<char> span = stackalloc char[32];
+		ToString(span);
+		return new string(span);
+	}
+
+	public void ToString(Span<char> buffer)
+	{
+		ReadOnlySpan<char> span = stackalloc char[32]
 		{
 			GetHexChar(Data0, 0),
 			GetHexChar(Data0, 4),
@@ -113,7 +120,7 @@ public readonly record struct UnityGuid
 			GetHexChar(Data3, 28),
 		};
 
-		return new string(span);
+		span.CopyTo(buffer);
 
 		static char GetHexChar(uint value, int offset)
 		{
