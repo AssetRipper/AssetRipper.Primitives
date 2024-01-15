@@ -1,4 +1,4 @@
-﻿#if NET7_0_OR_GREATER
+﻿#if NET5_0_OR_GREATER || NETSTANDARD2_0_OR_GREATER
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -60,7 +60,14 @@ public sealed class Utf8String : IEquatable<Utf8String>
 	public override int GetHashCode()
 	{
 		HashCode hash = new();
+#if NET6_0_OR_GREATER
 		hash.AddBytes(data);
+#else
+		foreach (byte b in data)
+		{
+			hash.Add(b);
+		}
+#endif
 		return hash.ToHashCode();
 	}
 
@@ -198,7 +205,10 @@ public sealed class Utf8String : IEquatable<Utf8String>
 
 	public static Utf8String Concat(params Utf8String?[] values)
 	{
-		ArgumentNullException.ThrowIfNull(values);
+		if (values is null)
+		{
+			throw new ArgumentNullException(nameof(values));
+		}
 
 		int totalLength = 0;
 		foreach (Utf8String? value in values)

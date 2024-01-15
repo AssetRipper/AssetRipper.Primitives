@@ -1,4 +1,4 @@
-﻿#if NET7_0_OR_GREATER
+﻿#if NET5_0_OR_GREATER
 namespace AssetRipper.Primitives.Tests;
 
 public class Utf8StringTests

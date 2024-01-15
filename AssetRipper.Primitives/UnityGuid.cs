@@ -1,6 +1,8 @@
-﻿#if NET7_0_OR_GREATER
+﻿#if NET5_0_OR_GREATER || NETSTANDARD2_0_OR_GREATER
 using System.Buffers.Binary;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,9 +15,13 @@ public readonly record struct UnityGuid
 {
 	public UnityGuid(Guid guid)
 	{
+#if NET5_0_OR_GREATER
 		Span<byte> guidData = stackalloc byte[16];
 		bool success = guid.TryWriteBytes(guidData);
 		Debug.Assert(success);
+#else
+		Span<byte> guidData = guid.ToByteArray();
+#endif
 		ConvertSystemOrUnityBytes(guidData, guidData);
 		Data0 = ReadUInt32LittleEndian(guidData, 0);
 		Data1 = ReadUInt32LittleEndian(guidData, 1);
@@ -44,10 +50,24 @@ public readonly record struct UnityGuid
 		//This is not an acceptable way to convert between Unity and System Guids.
 		//We only do it this way to efficiently get 16 random bytes.
 		//We don't care about official Guid validity because Unity does not care either.
-		Guid guid = Guid.NewGuid();
-		ReadOnlySpan<Guid> guidSpan = new ReadOnlySpan<Guid>(in guid);
-		ReadOnlySpan<byte> byteSpan = MemoryMarshal.AsBytes(guidSpan);
-		return new UnityGuid(byteSpan);
+		if (Unsafe.SizeOf<Guid>() == Unsafe.SizeOf<UnityGuid>())
+		{
+			Guid guid = Guid.NewGuid();
+			return Unsafe.As<Guid, UnityGuid>(ref guid);
+		}
+		else
+		{
+			return ThrowOrReturnDefault();
+		}
+
+		static UnityGuid ThrowOrReturnDefault()
+		{
+#if DEBUG
+			throw new InvalidCastException($"{nameof(UnityGuid)} struct size does not match {nameof(Guid)}.");
+#else
+			return default;
+#endif
+		}
 	}
 
 	public static explicit operator UnityGuid(Guid systemGuid) => new UnityGuid(systemGuid);
@@ -57,7 +77,11 @@ public readonly record struct UnityGuid
 		Span<byte> span = stackalloc byte[16];
 		unityGuid.Write(span);
 		ConvertSystemOrUnityBytes(span, span);
+#if NET5_0_OR_GREATER
 		return new Guid(span);
+#else
+		return new Guid(span.ToArray());
+#endif
 	}
 
 	private void Write(Span<byte> span)
@@ -79,7 +103,16 @@ public readonly record struct UnityGuid
 	{
 		Span<char> span = stackalloc char[32];
 		ToString(span);
-		return new string(span);
+		return CreateString(span);
+
+		static string CreateString(Span<char> span)
+		{
+#if NET5_0_OR_GREATER
+			return new string(span);
+#else
+			return new string(span.ToArray());
+#endif
+		}
 	}
 
 	public void ToString(Span<char> buffer)
@@ -193,15 +226,31 @@ public readonly record struct UnityGuid
 	/// <returns>A stable guid corresponding to the <paramref name="input"/>.</returns>
 	public static UnityGuid Md5Hash(scoped ReadOnlySpan<byte> input)
 	{
-		byte[] hashBytes = MD5.HashData(input);
-		ConvertSystemOrUnityBytes(hashBytes, hashBytes);
-		return new UnityGuid(hashBytes);
+		Span<byte> buffer = stackalloc byte[16];
+		HashData(input, buffer);
+		ConvertSystemOrUnityBytes(buffer, buffer);
+		return new UnityGuid(buffer);
+	}
+
+	private static void HashData(ReadOnlySpan<byte> data, Span<byte> buffer)
+	{
+#if NET5_0_OR_GREATER
+		MD5.HashData(data, buffer);
+#else
+		MD5.Create().ComputeHash(data.ToArray()).AsSpan().CopyTo(buffer);
+#endif
 	}
 
 	public static UnityGuid Md5Hash(scoped ReadOnlySpan<byte> assemblyName, scoped ReadOnlySpan<byte> @namespace, scoped ReadOnlySpan<byte> className)
 	{
 		int length = assemblyName.Length + @namespace.Length + className.Length;
-		Span<byte> input = length < 1024 ? stackalloc byte[length] : GC.AllocateUninitializedArray<byte>(length);
+		Span<byte> input = length < 1024
+			? stackalloc byte[length]
+#if NET5_0_OR_GREATER
+			: GC.AllocateUninitializedArray<byte>(length);
+#else
+			: new byte[length];
+#endif
 		assemblyName.CopyTo(input);
 		@namespace.CopyTo(input.Slice(assemblyName.Length));
 		className.CopyTo(input.Slice(assemblyName.Length + @namespace.Length));

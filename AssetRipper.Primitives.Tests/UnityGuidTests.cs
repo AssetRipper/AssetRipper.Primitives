@@ -1,4 +1,4 @@
-#if NET7_0_OR_GREATER
+#if NET5_0_OR_GREATER
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -83,7 +83,7 @@ public class UnityGuidTests
 	{
 		Guid originalGuid = Guid.NewGuid();
 		UnityGuid tobyteArrayGuid = new UnityGuid(originalGuid.ToByteArray());
-		UnityGuid memoryMarshallGuid = new UnityGuid(MemoryMarshal.Cast<Guid, byte>(new ReadOnlySpan<Guid>(in originalGuid)));
+		UnityGuid memoryMarshallGuid = Unsafe.As<Guid, UnityGuid>(ref originalGuid);
 		Assert.That(memoryMarshallGuid, Is.EqualTo(tobyteArrayGuid));
 	}
 }
