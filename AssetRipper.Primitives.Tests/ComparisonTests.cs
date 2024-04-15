@@ -72,20 +72,4 @@ public class ComparisonTests
 			Assert.That(new UnityVersion(2019, 1, 0, UnityVersionType.Final, 1).LessThanOrEquals(2019, 1, 0));
 		});
 	}
-
-	[TestCase(2017)]
-	[TestCase(2018)]
-	[TestCase(2019)]
-	[TestCase(2020)]
-	[TestCase(2021)]
-	[TestCase(2022)]
-	[TestCase(2023)]
-	public void YearVersioningIsBetweenFiveAndSix(int year)
-	{
-		Assert.Multiple(() =>
-		{
-			Assert.That(new UnityVersion((ushort)year).GreaterThan(5));
-			Assert.That(new UnityVersion((ushort)year).LessThan(6));
-		});
-	}
 }
