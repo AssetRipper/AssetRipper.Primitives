@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<Authors>ds5678</Authors>
 		<Company>AssetRipper</Company>
-		<Version>3.0.0</Version>
+		<Version>3.1.0</Version>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<PackageId>AssetRipper.Primitives</PackageId>
 		<PackageTags>C# assetripper unity unity3d</PackageTags>
