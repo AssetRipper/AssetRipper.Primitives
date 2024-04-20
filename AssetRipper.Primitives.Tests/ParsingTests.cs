@@ -9,6 +9,7 @@ public class ParsingTests
 	[TestCase("4.2.2f1\n1", 4, 2, 2, UnityVersionType.Final, 1, "\n1", "Custom Unity 4 Version")]
 	[TestCase("2343.4.5f7", 2343, 4, 5, UnityVersionType.Final, 7, null, "Fictitious Future Version")]
 	[TestCase("2019.2.2f1c2\n2", 2019, 2, 2, UnityVersionType.China, 2, "\n2", "Fake Custom Chinese Version")]
+	[TestCase("2019", 2019, 0, 0, UnityVersionType.Final, 1, null, "Major Only")]
 	[TestCase("2019.4", 2019, 4, 0, UnityVersionType.Final, 1, null, "Major Minor Only")]
 	[TestCase("2019.4.3", 2019, 4, 3, UnityVersionType.Final, 1, null, "Major Minor Build Only")]
 	[TestCase("2019.2.2f1-letters", 2019, 2, 2, UnityVersionType.Final, 1, "-letters", "Issue #40 - Appended Custom Characters")]

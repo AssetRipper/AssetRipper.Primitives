@@ -5,6 +5,7 @@ namespace AssetRipper.Primitives;
 
 public readonly partial struct UnityVersion
 {
+	private static readonly Regex majorRegex = new Regex(@"^([0-9]+)$", RegexOptions.Compiled);
 	private static readonly Regex majorMinorRegex = new Regex(@"^([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
 	private static readonly Regex majorMinorBuildRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
 	private static readonly Regex normalRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abcfpx])([0-9]+)((?:.|[\r\n])+)?$", RegexOptions.Compiled);
@@ -134,6 +135,13 @@ public readonly partial struct UnityVersion
 			int minor = int.Parse(match.Groups[2].Value);
 			customEngine = null;
 			version = new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 1);
+			return true;
+		}
+		else if (majorRegex.TryMatch(s, out match))
+		{
+			int major = int.Parse(match.Groups[1].Value);
+			customEngine = null;
+			version = new UnityVersion((ushort)major, 0, 0, UnityVersionType.Final, 1);
 			return true;
 		}
 		else
