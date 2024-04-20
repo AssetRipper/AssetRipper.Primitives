@@ -126,7 +126,9 @@ public readonly partial struct UnityVersion
 			int minor = int.Parse(match.Groups[2].Value);
 			int build = int.Parse(match.Groups[3].Value);
 			customEngine = null;
-			version = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.Final, 1);
+			version = major is not 0 || minor is not 0 || build is not 0
+				? new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.Final, 1)
+				: default;
 			return true;
 		}
 		else if (majorMinorRegex.TryMatch(s, out match))
@@ -134,14 +136,18 @@ public readonly partial struct UnityVersion
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
 			customEngine = null;
-			version = new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 1);
+			version = major is not 0 || minor is not 0
+				? new UnityVersion((ushort)major, (ushort)minor, 0, UnityVersionType.Final, 1)
+				: default;
 			return true;
 		}
 		else if (majorRegex.TryMatch(s, out match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			customEngine = null;
-			version = new UnityVersion((ushort)major, 0, 0, UnityVersionType.Final, 1);
+			version = major is not 0
+				? new UnityVersion((ushort)major, 0, 0, UnityVersionType.Final, 1)
+				: default;
 			return true;
 		}
 		else

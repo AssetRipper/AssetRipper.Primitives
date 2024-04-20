@@ -12,6 +12,10 @@ public class ParsingTests
 	[TestCase("2019", 2019, 0, 0, UnityVersionType.Final, 1, null, "Major Only")]
 	[TestCase("2019.4", 2019, 4, 0, UnityVersionType.Final, 1, null, "Major Minor Only")]
 	[TestCase("2019.4.3", 2019, 4, 3, UnityVersionType.Final, 1, null, "Major Minor Build Only")]
+	[TestCase("0", 0, 0, 0, UnityVersionType.Alpha, 0, null, "Zero, Major Only")]
+	[TestCase("0.0", 0, 0, 0, UnityVersionType.Alpha, 0, null, "Zero, Major Minor Only")]
+	[TestCase("0.0.0", 0, 0, 0, UnityVersionType.Alpha, 0, null, "Zero, Major Minor Build Only")]
+	[TestCase("0.0.0b2", 0, 0, 0, UnityVersionType.Beta, 2, null, "Zero, Full")]
 	[TestCase("2019.2.2f1-letters", 2019, 2, 2, UnityVersionType.Final, 1, "-letters", "Issue #40 - Appended Custom Characters")]
 	public void UnityVersionParsesCorrectly(string versionString, int major, int minor, int build, UnityVersionType type, int typeNumber, string? customEngine, string name)
 	{
@@ -21,7 +25,7 @@ public class ParsingTests
 		{
 			Assert.That(parsedCustomEngine, Is.EqualTo(customEngine), $"The custom engine boolean is incorrect for '{name}'");
 			Assert.That(parsedVersion, Is.EqualTo(expected), $"The parsed version is incorrect for '{name}'");
-			if (customEngine is not null || typeNumber is not 1)
+			if (customEngine is not null || typeNumber is not 0 and not 1)
 			{
 				Assert.That(parsedVersion.ToString(UnityVersionFormatFlags.Default, parsedCustomEngine ?? ""), Is.EqualTo(versionString));
 			}
