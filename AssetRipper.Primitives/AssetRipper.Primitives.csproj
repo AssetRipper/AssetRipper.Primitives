@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netframework3.5;netframework4.0;netstandard2.0;net5.0;net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>netframework3.5;netframework4.0;netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
 		<LangVersion>Latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<Authors>ds5678</Authors>
@@ -23,6 +23,10 @@
 	
 	<PropertyGroup Condition=" '$(TargetFramework)' != 'netframework3.5' and '$(TargetFramework)' != 'netframework4.0' ">
 		<IsTrimmable>true</IsTrimmable>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
+		<IsAotCompatible>true</IsAotCompatible>
 	</PropertyGroup>
 
 	<ItemGroup>
