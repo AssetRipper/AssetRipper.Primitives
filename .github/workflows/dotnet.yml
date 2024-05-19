@@ -7,6 +7,23 @@ on:
     branches: [ master ]
 
 jobs:
+  net8:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4.0.0
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --framework net8.0 --no-restore
+    - name: Test
+      run: dotnet test --framework net8.0 --no-build --verbosity normal
+
   net7:
 
     runs-on: ubuntu-latest
@@ -50,9 +67,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4.0.0
       with:
-        dotnet-version: | 
-            5.0.x
-            6.0.x
+        dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
