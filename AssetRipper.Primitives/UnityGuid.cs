@@ -6,11 +6,12 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace AssetRipper.Primitives;
 
-[JsonConverter(typeof(UnityGuidJsonConverter))]
+#if NET5_0_OR_GREATER
+[System.Text.Json.Serialization.JsonConverter(typeof(UnityGuidJsonConverter))]
+#endif
 public readonly record struct UnityGuid
 {
 	public UnityGuid(Guid guid)
