@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netframework3.5;netframework4.0;netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net35;net40;net461;netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
 		<LangVersion>Latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<Authors>ds5678</Authors>
@@ -21,7 +21,7 @@
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition=" '$(TargetFramework)' != 'netframework3.5' and '$(TargetFramework)' != 'netframework4.0' ">
+	<PropertyGroup Condition=" '$(TargetFramework)' != 'net35' and '$(TargetFramework)' != 'net40' ">
 		<IsTrimmable>true</IsTrimmable>
 	</PropertyGroup>
 
@@ -40,12 +40,18 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'net461'">
 		<PackageReference Include="Microsoft.Bcl.HashCode">
 			<Version>1.1.1</Version>
 		</PackageReference>
 		<PackageReference Include="System.Memory">
 			<Version>4.5.5</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+		<PackageReference Include="System.ValueTuple">
+			<Version>4.5.0</Version>
 		</PackageReference>
 	</ItemGroup>
 
