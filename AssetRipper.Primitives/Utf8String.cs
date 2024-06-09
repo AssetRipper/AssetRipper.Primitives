@@ -11,7 +11,12 @@ namespace AssetRipper.Primitives;
 /// <remarks>
 /// Conversions to and from <see cref="string"/> are handled by <see cref="Encoding.UTF8"/>.
 /// </remarks>
-public sealed class Utf8String : IEquatable<Utf8String>
+public sealed class Utf8String :
+#if NET7_0_OR_GREATER
+	System.Numerics.IEqualityOperators<Utf8String?, Utf8String?, bool>,
+    System.Numerics.IEqualityOperators<Utf8String?, string?, bool>,
+#endif
+    IEquatable<Utf8String>
 {
 	private readonly byte[] data;
 	private string? cachedString;

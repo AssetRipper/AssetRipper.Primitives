@@ -13,6 +13,9 @@ namespace AssetRipper.Primitives;
 [System.Text.Json.Serialization.JsonConverter(typeof(UnityGuidJsonConverter))]
 #endif
 public readonly record struct UnityGuid
+#if NET7_0_OR_GREATER
+	: System.Numerics.IEqualityOperators<UnityGuid, UnityGuid, bool>
+#endif
 {
 	public UnityGuid(Guid guid)
 	{
