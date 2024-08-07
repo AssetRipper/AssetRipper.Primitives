@@ -2,15 +2,8 @@
 using System.Text.RegularExpressions;
 
 namespace AssetRipper.Primitives;
-
 public readonly partial struct UnityVersion
 {
-	private static readonly Regex majorRegex = new Regex(@"^([0-9]+)$", RegexOptions.Compiled);
-	private static readonly Regex majorMinorRegex = new Regex(@"^([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
-	private static readonly Regex majorMinorBuildRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)$", RegexOptions.Compiled);
-	private static readonly Regex normalRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abcfpx])([0-9]+)((?:.|[\r\n])+)?$", RegexOptions.Compiled);
-	private static readonly Regex chinaRegex = new Regex(@"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f1c([0-9]+)((?:.|[\r\n])+)?$", RegexOptions.Compiled);
-	
 	/// <summary>
 	/// Serialize the version as a string using <see cref="UnityVersionFormatFlags.Default"/>.
 	/// </summary>
@@ -99,7 +92,7 @@ public readonly partial struct UnityVersion
 			version = default;
 			return false;
 		}
-		else if (chinaRegex.TryMatch(s, out Match? match))
+		else if (UnityVersionRegexes.GetChinaRegex().TryMatch(s, out Match? match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
@@ -109,7 +102,7 @@ public readonly partial struct UnityVersion
 			version = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, UnityVersionType.China, (byte)typeNumber);
 			return true;
 		}
-		else if(normalRegex.TryMatch(s, out match))
+		else if(UnityVersionRegexes.GetNormalRegex().TryMatch(s, out match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
@@ -120,7 +113,7 @@ public readonly partial struct UnityVersion
 			version = new UnityVersion((ushort)major, (ushort)minor, (ushort)build, type.ToUnityVersionType(), (byte)typeNumber);
 			return true;
 		}
-		else if (majorMinorBuildRegex.TryMatch(s, out match))
+		else if (UnityVersionRegexes.GetMajorMinorBuildRegex().TryMatch(s, out match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
@@ -131,7 +124,7 @@ public readonly partial struct UnityVersion
 				: default;
 			return true;
 		}
-		else if (majorMinorRegex.TryMatch(s, out match))
+		else if (UnityVersionRegexes.GetMajorMinorRegex().TryMatch(s, out match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			int minor = int.Parse(match.Groups[2].Value);
@@ -141,7 +134,7 @@ public readonly partial struct UnityVersion
 				: default;
 			return true;
 		}
-		else if (majorRegex.TryMatch(s, out match))
+		else if (UnityVersionRegexes.GetMajorRegex().TryMatch(s, out match))
 		{
 			int major = int.Parse(match.Groups[1].Value);
 			customEngine = null;
