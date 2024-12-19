@@ -73,6 +73,22 @@ public class ParsingTests
 		});
 	}
 
+	[TestCase("g2019")]
+	[TestCase("g2019.4")]
+	[TestCase("g2019.4.3")]
+	[TestCase("g2019.4.3f")]
+	[TestCase("g2019.4.3f1")]
+	[TestCase("g2019.4.3f1c1")]
+	[TestCase("2019g")]
+	[TestCase("2019.4g")]
+	[TestCase("2019.4.3g")]
+	[TestCase("2019.4.3fg")]
+	// "2019.4.3f1g" and "2019.4.3f1c1g" are technically valid because custom engines often append some text to the version string.
+	public void InvalidVersionStringFailsToParse(string versionString)
+	{
+		Assert.That(UnityVersion.TryParse(versionString, out _, out _), Is.False);
+	}
+
 	private static IEnumerable<UnityVersion> GenerateRandomVersions(int count)
 	{
 		Randomizer random = TestContext.CurrentContext.Random;

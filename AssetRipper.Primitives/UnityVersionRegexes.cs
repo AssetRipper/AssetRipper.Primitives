@@ -12,19 +12,19 @@ internal static partial class UnityVersionRegexes
 #endif
 
 	[StringSyntax("regex")]
-	private const string Major = @"([0-9]+)";
+	private const string Major = @"^([0-9]+)$";
 
 	[StringSyntax("regex")]
-	private const string MajorMinor = @"([0-9]+)\.([0-9]+)";
+	private const string MajorMinor = @"^([0-9]+)\.([0-9]+)$";
 
 	[StringSyntax("regex")]
-	private const string MajorMinorBuild = @"([0-9]+)\.([0-9]+)\.([0-9]+)";
+	private const string MajorMinorBuild = @"^([0-9]+)\.([0-9]+)\.([0-9]+)$";
 
 	[StringSyntax("regex")]
-	private const string Normal = @"([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abcfpx])([0-9]+)((?:.|[\r\n])+)?";
+	private const string Normal = @"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?([abcfpx])([0-9]+)((?:.|[\r\n])+)?$";
 
 	[StringSyntax("regex")]
-	private const string China = @"([0-9]+)\.([0-9]+)\.([0-9]+)\.?f1c([0-9]+)((?:.|[\r\n])+)?";
+	private const string China = @"^([0-9]+)\.([0-9]+)\.([0-9]+)\.?f1c([0-9]+)((?:.|[\r\n])+)?$";
 
 #if NET7_0_OR_GREATER
 	[GeneratedRegex(Major, Options)]
