@@ -18,8 +18,14 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4.1.0
       with:
-        dotnet-version: ${{ matrix.dotnet-version }}.x
+        dotnet-version:  |
+          5.0.x
+          6.0.x
+          7.0.x
+          8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Build
-      run: dotnet build --framework net${{ matrix.dotnet-version }}
+      run: dotnet build --framework net${{ matrix.dotnet-version }} --no-restore
     - name: Test
       run: dotnet test --framework net${{ matrix.dotnet-version }} --no-build --verbosity normal
