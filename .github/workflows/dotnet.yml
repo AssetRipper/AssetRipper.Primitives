@@ -7,70 +7,21 @@ on:
     branches: [ master ]
 
 jobs:
-  net8:
-
+  build-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [8.0, 7.0, 6.0, 5.0]
 
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4.1.0
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: ${{ matrix.dotnet-version }}.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --framework net8.0 --no-restore
+      run: dotnet build --framework net${{ matrix.dotnet-version }} --no-restore
     - name: Test
-      run: dotnet test --framework net8.0 --no-build --verbosity normal
-
-  net7:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4.1.0
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --framework net7.0 --no-restore
-    - name: Test
-      run: dotnet test --framework net7.0 --no-build --verbosity normal
-
-  net6:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4.1.0
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --framework net6.0 --no-restore
-    - name: Test
-      run: dotnet test --framework net6.0 --no-build --verbosity normal
-
-  net5:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4.1.0
-      with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --framework net5.0 --no-restore
-    - name: Test
-      run: dotnet test --framework net5.0 --no-build --verbosity normal
+      run: dotnet test --framework net${{ matrix.dotnet-version }} --no-build --verbosity normal
