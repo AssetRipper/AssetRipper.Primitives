@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<Authors>ds5678</Authors>
 		<Company>AssetRipper</Company>
-		<Version>3.1.4</Version>
+		<Version>3.1.5</Version>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<PackageId>AssetRipper.Primitives</PackageId>
 		<PackageTags>C# assetripper unity unity3d</PackageTags>
@@ -14,18 +14,18 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/AssetRipper/AssetRipper.Primitives</PackageProjectUrl>
-		<Copyright>Copyright (c) 2022-2024 ds5678</Copyright>
+		<Copyright>Copyright (c) 2022-2025 ds5678</Copyright>
 		<Description>Managed library for primitive types used in AssetRipper.</Description>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
-	
-	<PropertyGroup Condition=" '$(TargetFramework)' != 'net35' and '$(TargetFramework)' != 'net40' ">
+
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
 		<IsTrimmable>true</IsTrimmable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
 		<IsAotCompatible>true</IsAotCompatible>
 	</PropertyGroup>
 
