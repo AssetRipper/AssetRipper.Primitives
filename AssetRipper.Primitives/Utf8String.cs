@@ -11,12 +11,15 @@ namespace AssetRipper.Primitives;
 /// <remarks>
 /// Conversions to and from <see cref="string"/> are handled by <see cref="Encoding.UTF8"/>.
 /// </remarks>
+#if NET5_0_OR_GREATER
+[System.Text.Json.Serialization.JsonConverter(typeof(Utf8StringJsonConverter))]
+#endif
 public sealed class Utf8String :
 #if NET7_0_OR_GREATER
 	System.Numerics.IEqualityOperators<Utf8String?, Utf8String?, bool>,
-    System.Numerics.IEqualityOperators<Utf8String?, string?, bool>,
+	System.Numerics.IEqualityOperators<Utf8String?, string?, bool>,
 #endif
-    IEquatable<Utf8String>
+	IEquatable<Utf8String>
 {
 	private readonly byte[] data;
 	private string? cachedString;
@@ -28,7 +31,7 @@ public sealed class Utf8String :
 	/// </summary>
 	public Utf8String()
 	{
-		data = Array.Empty<byte>();
+		data = [];
 		cachedString = "";
 	}
 
