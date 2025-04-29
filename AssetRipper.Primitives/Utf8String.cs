@@ -111,8 +111,10 @@ public sealed class Utf8String :
 		return utf8String?.String;
 	}
 
-	public static implicit operator Utf8String(ReadOnlySpan<byte> data)
+	public static explicit operator Utf8String(ReadOnlySpan<byte> data)
 	{
+		// Explicit conversion because of first class spans
+		// https://github.com/dotnet/roslyn/issues/78314
 		return data.Length == 0 ? Empty : new Utf8String(data);
 	}
 

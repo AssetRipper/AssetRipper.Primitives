@@ -33,7 +33,7 @@ public class Utf8StringTests
 	[Test]
 	public void Utf8StringMadeFromUtf8LiteralIsTheSameAsMadeFromConstantString()
 	{
-		Utf8String dataString = "AssetRipperTestString"u8;
+		Utf8String dataString = (Utf8String)"AssetRipperTestString"u8;
 		Utf8String systemString = "AssetRipperTestString";
 		Assert.That(dataString, Is.EqualTo(systemString));
 	}
@@ -41,7 +41,7 @@ public class Utf8StringTests
 	[Test]
 	public void ConcatenationBetweenTwoUtf8StringsWorks()
 	{
-		Utf8String dataString = "AssetRipperTestString"u8;
+		Utf8String dataString = (Utf8String)"AssetRipperTestString"u8;
 		Utf8String systemString = "AssetRipperTestString";
 		Utf8String concatenated = dataString + systemString;
 		Assert.That(concatenated, Is.EqualTo((Utf8String)"AssetRipperTestStringAssetRipperTestString"u8));
@@ -58,10 +58,10 @@ public class Utf8StringTests
 	[Test]
 	public void ConcatenationBetweenFourUtf8StringsWorks()
 	{
-		Utf8String string1 = "hello"u8;
-		Utf8String string2 = " world"u8;
-		Utf8String string3 = "!"u8;
-		Utf8String string4 = ", how are you?"u8;
+		Utf8String string1 = (Utf8String)"hello"u8;
+		Utf8String string2 = (Utf8String)" world"u8;
+		Utf8String string3 = (Utf8String)"!"u8;
+		Utf8String string4 = (Utf8String)", how are you?"u8;
 		Utf8String concatenated = Utf8String.Concat(string1, string2, string3, string4);
 		Assert.That(concatenated, Is.EqualTo((Utf8String)"hello world!, how are you?"u8));
 	}
@@ -81,7 +81,7 @@ public class Utf8StringTests
 	[Test]
 	public void IsNullOrEmptyReturnsFalseForNonEmptyString()
 	{
-		Assert.That(Utf8String.IsNullOrEmpty("AssetRipperTestString"u8), Is.False);
+		Assert.That(Utf8String.IsNullOrEmpty((Utf8String)"AssetRipperTestString"u8), Is.False);
 	}
 }
 #endif
